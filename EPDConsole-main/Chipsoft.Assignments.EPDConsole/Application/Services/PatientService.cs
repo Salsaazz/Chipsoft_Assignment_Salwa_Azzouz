@@ -19,23 +19,36 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
             FormatPerson(person);
 
             var findPerson = await GetPerson(person.FullName, person.Birthdate);
-            if (findPerson?.Count() > 0)
+
+            if (!findPerson.Any())
                 throw new InvalidOperationException("Deze patient is al geregistreerd.");
 
             return await patientRepository.CreatePerson(person);
         }
-        public async Task<Patient> DeletePerson(Patient person) => await patientRepository.DeletePerson(person!) ?? throw new NullReferenceException("Deze patient bestaat niet in het systeem.");
 
-        public async Task<IEnumerable<Patient?>> GetPersonByName(string name)
+        public async Task<Patient> DeletePerson(Patient person)
+        {
+            try
+            {
+                await patientRepository.DeletePerson(person!);
+                return person;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Fout bij het verwijderen van de patient.", ex);
+            }
+        }
+
+        public async Task<IEnumerable<Patient?>> GetPerson(string name)
         {
             if (string.IsNullOrEmpty(name))
-                throw new NullReferenceException("De naam kan niet leeg zijn.");
+                throw new ArgumentException("De naam kan niet leeg zijn.");
 
             name.CapitalizeFirstLetterOfWords();
             IEnumerable<Patient?> result = await patientRepository.GetPerson(name!.ToLower());
 
             if (!result.Any())
-                throw new NullReferenceException($"Patient {name} is nog niet geregistreerd in het systeem. Registreer eerst de patient.");
+                throw new InvalidOperationException($"Patient {name} is nog niet geregistreerd in het systeem. Registreer eerst de patient.");
 
             return result;
         }

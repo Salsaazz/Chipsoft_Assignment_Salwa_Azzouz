@@ -205,7 +205,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
         public async static Task<Patient> GetChosenPatient(string? patientName)
         {
 
-            IEnumerable<Patient?> patients = await patientService.GetPersonByName(patientName!);
+            IEnumerable<Patient?> patients = await patientService.GetPerson(patientName!);
 
             foreach (var patient in patients)
             {
@@ -224,7 +224,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
         public async static Task<Physician> GetChosenPhysician(string physicianName)
         {
 
-            IEnumerable<Physician?> physicians = await physicianService.GetPersonByName(physicianName);
+            IEnumerable<Physician?> physicians = await physicianService.GetPerson(physicianName);
 
             Console.WriteLine();
 

@@ -26,7 +26,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
         {
             IEnumerable<Appointment?> appointments = await appointmentRepository.GetAllAppointments();
             if (!appointments.Any())
-                throw new NullReferenceException("Er zijn geen afspraken.");
+                throw new InvalidOperationException("Er zijn geen afspraken.");
 
             return appointments;
         }

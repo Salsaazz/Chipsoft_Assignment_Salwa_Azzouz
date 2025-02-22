@@ -23,11 +23,10 @@ namespace Chipsoft.Assignments.EPDConsole.Infrastructure.Repository
             return person;
         }
 
-        public async Task<T> DeletePerson(T person)
+        public async Task DeletePerson(T person)
         {
             dbSet.Remove(person);
             await dbContext.SaveChangesAsync();
-            return person;
         }
 
         public async Task<IEnumerable<T?>> GetPerson(string name) => await dbSet
