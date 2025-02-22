@@ -1,6 +1,6 @@
 ﻿using Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.Interfaces;
+using Chipsoft.Assignments.EPDConsole.ApplicationCore.Common.Extensions;
 using Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models;
-using Chipsoft.Assignments.EPDConsole.Common.Extensions;
 using Chipsoft.Assignments.EPDConsole.Infrastructure.Interface;
 
 namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.Services

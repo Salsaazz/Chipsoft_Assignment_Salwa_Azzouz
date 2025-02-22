@@ -1,4 +1,4 @@
-﻿using Chipsoft.Assignments.EPDConsole.Common.Extensions;
+﻿using Chipsoft.Assignments.EPDConsole.ApplicationCore.Common.Extensions;
 using System.ComponentModel.DataAnnotations;
 
 namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models
