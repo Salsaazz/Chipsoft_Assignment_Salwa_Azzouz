@@ -1,6 +1,6 @@
-﻿using Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models;
+﻿using Chipsoft.Assignments.EPDConsole.Domain.Models;
 
-namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.Interfaces
+namespace Chipsoft.Assignments.EPDConsole.Application.Interfaces
 {
     public interface IPersonService<T> where T : Person
     {

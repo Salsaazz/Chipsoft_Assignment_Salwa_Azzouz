@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
-namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models
+namespace Chipsoft.Assignments.EPDConsole.Domain.Models
 {
     public class Appointment
     {

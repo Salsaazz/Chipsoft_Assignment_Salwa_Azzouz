@@ -1,7 +1,7 @@
-﻿using Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.DTO_s;
-using Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.Interfaces;
-using Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.Services;
-using Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models;
+﻿using Chipsoft.Assignments.EPDConsole.Application.Interfaces;
+using Chipsoft.Assignments.EPDConsole.Application.Services;
+using Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.DTO_s;
+using Chipsoft.Assignments.EPDConsole.Domain.Models;
 using Chipsoft.Assignments.EPDConsole.Infrastructure.Context;
 using Chipsoft.Assignments.EPDConsole.Infrastructure.Repository;
 
@@ -230,7 +230,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
             foreach (var physician in physicians)
             {
-                Console.WriteLine($"\t {physician!.Id}. {physician} ({physician.Birthdate})");
+                Console.WriteLine($"\t {physician!.Id}. {physician}");
             }
 
             Console.WriteLine();

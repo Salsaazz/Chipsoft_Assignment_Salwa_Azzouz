@@ -1,8 +1,8 @@
-﻿using Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.Interfaces;
-using Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models;
+﻿using Chipsoft.Assignments.EPDConsole.Application.Interfaces;
+using Chipsoft.Assignments.EPDConsole.Domain.Models;
 using Chipsoft.Assignments.EPDConsole.Infrastructure.Interface;
 
-namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.Services
+namespace Chipsoft.Assignments.EPDConsole.Application.Services
 {
     public class PhysicianService : IPersonService<Physician>
     {

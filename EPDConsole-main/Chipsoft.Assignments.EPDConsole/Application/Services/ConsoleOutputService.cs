@@ -1,4 +1,4 @@
-﻿namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Application.Services
+﻿namespace Chipsoft.Assignments.EPDConsole.Application.Services
 {
     public static class ConsoleOutputService
     {

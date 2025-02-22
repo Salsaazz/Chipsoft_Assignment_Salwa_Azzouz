@@ -1,9 +1,9 @@
-﻿using Chipsoft.Assignments.EPDConsole.ApplicationCore.Common.Extensions;
+﻿using Chipsoft.Assignments.EPDConsole.Domain.Extensions;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
-namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models
+namespace Chipsoft.Assignments.EPDConsole.Domain.Models
 {
     public abstract class Person
     {

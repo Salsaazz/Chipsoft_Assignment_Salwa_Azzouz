@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Common.Extensions
+namespace Chipsoft.Assignments.EPDConsole.Domain.Extensions
 {
     public static class UserInput
     {

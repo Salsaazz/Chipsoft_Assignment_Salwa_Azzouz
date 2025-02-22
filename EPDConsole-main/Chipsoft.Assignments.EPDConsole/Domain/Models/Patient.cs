@@ -1,7 +1,7 @@
-﻿using Chipsoft.Assignments.EPDConsole.ApplicationCore.Common.Extensions;
+﻿using Chipsoft.Assignments.EPDConsole.Domain.Extensions;
 using System.ComponentModel.DataAnnotations;
 
-namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models
+namespace Chipsoft.Assignments.EPDConsole.Domain.Models
 {
     public class Patient : Person
     {

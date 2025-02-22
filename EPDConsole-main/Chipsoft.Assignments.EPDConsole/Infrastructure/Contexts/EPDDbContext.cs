@@ -1,4 +1,4 @@
-﻿using Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models;
+﻿using Chipsoft.Assignments.EPDConsole.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Chipsoft.Assignments.EPDConsole.Infrastructure.Context

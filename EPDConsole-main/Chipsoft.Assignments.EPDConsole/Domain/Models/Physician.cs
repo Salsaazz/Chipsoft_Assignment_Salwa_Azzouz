@@ -1,4 +1,4 @@
-﻿namespace Chipsoft.Assignments.EPDConsole.ApplicationCore.Domain.Models
+﻿namespace Chipsoft.Assignments.EPDConsole.Domain.Models
 {
     public class Physician : Person
     {
