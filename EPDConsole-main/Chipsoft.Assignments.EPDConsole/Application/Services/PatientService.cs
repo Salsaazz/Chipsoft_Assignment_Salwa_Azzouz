@@ -21,7 +21,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
             IEnumerable<Patient?> findPerson = await GetPerson(person.FullName, person.Birthdate);
 
             if (findPerson.Any())
-                throw new InvalidOperationException("Deze patient is al geregistreerd.");
+                throw new InvalidOperationException("deze patient is al geregistreerd.");
 
             return await patientRepository.CreatePerson(person);
         }
@@ -35,20 +35,20 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Fout bij het verwijderen van de patient.", ex);
+                throw new InvalidOperationException("fout bij het verwijderen van de patient.", ex);
             }
         }
 
         public async Task<IEnumerable<Patient?>> GetPerson(string name)
         {
             if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("De naam kan niet leeg zijn.");
+                throw new ArgumentException("de naam kan niet leeg zijn.");
 
             name.CapitalizeFirstLetterOfWords();
             IEnumerable<Patient?> result = await patientRepository.GetPerson(name!.ToLower());
 
             if (!result.Any())
-                throw new InvalidOperationException($"Patient {name} is nog niet geregistreerd in het systeem. Registreer eerst de patient.");
+                throw new InvalidOperationException($"patient {name} is nog niet geregistreerd in het systeem. Registreer eerst de patient.");
 
             return result;
         }
@@ -61,6 +61,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
             person.LastName = person.LastName.ToLower();
             person.FirstName = char.ToUpper(person.FirstName[0]) + person.FirstName.Substring(1).Trim();
             person.LastName = char.ToUpper(person.LastName[0]) + person.LastName.Substring(1).Trim();
+            person.Address = person.Address.Trim();
         }
     }
 }

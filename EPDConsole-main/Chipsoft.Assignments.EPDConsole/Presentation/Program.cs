@@ -47,13 +47,13 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.Clear();
                 Console.WriteLine("Verwijder patient");
                 Console.Write("\t Naam van patient: ");
-                string name = Console.ReadLine();
+                string name = Console.ReadLine()!;
 
                 Patient patient = await GetChosenPatient(name);
 
                 Patient deletedPatient = await patientService.DeletePerson(patient!);
 
-                ConsoleOutputService.ShowSuccess($"Patient: {deletedPatient!.FullName} met id {deletedPatient.Id} is verwijderd.");
+                ConsoleOutputService.ShowSuccess($"patient {deletedPatient!.FullName} met id {deletedPatient.Id} is verwijderd.");
             }
             catch (Exception e)
             {
@@ -68,7 +68,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.Clear();
                 Console.WriteLine("Verwijderen van arts");
                 Console.Write("\t Naam van arts: ");
-                string name = Console.ReadLine();
+                string name = Console.ReadLine()!;
 
                 Physician physician = await GetChosenPhysician(name!);
 

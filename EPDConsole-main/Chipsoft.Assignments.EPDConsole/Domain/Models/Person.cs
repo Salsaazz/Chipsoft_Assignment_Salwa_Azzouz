@@ -63,10 +63,6 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
 
                 if (!IsDateInputCorrect)
                     throw new ArgumentException("ongeldige geboortedatum invoer. Gebruik het formaat dag-maand-jaar.");
-
-                if (birthdate > DateTime.Now)
-
-                    throw new ArgumentException("geboortedatum kan niet in de toekomst liggen.");
             }
         }
 
