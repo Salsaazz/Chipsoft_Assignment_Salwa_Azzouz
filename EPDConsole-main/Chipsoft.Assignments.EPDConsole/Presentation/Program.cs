@@ -47,7 +47,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.Clear();
                 Console.WriteLine("Verwijder patient");
                 Console.Write("\t Naam van patient: ");
-                var name = Console.ReadLine();
+                string name = Console.ReadLine();
 
                 Patient patient = await GetChosenPatient(name);
 
@@ -68,13 +68,13 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.Clear();
                 Console.WriteLine("Verwijderen van arts");
                 Console.Write("\t Naam van arts: ");
-                var name = Console.ReadLine();
+                string name = Console.ReadLine();
 
                 Physician physician = await GetChosenPhysician(name!);
 
-                var deletedPhysician = await physicianService.DeletePerson(physician!);
+                Physician deletedPhysician = await physicianService.DeletePerson(physician!);
 
-                ConsoleOutputService.ShowSuccess($"Arts: {deletedPhysician!.FullName} met id {deletedPhysician.Id} is verwijderd.");
+                ConsoleOutputService.ShowSuccess($"{deletedPhysician!} met id {deletedPhysician.Id} is verwijderd.");
             }
             catch (Exception e)
             {
@@ -89,7 +89,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.Clear();
                 Console.WriteLine("Registratie arts");
 
-                var physician = CreatePhysician();
+                Physician physician = CreatePhysician();
                 Physician result = await physicianService.AddPerson(physician);
 
                 ConsoleOutputService.ShowSuccess($"Dr. {physician.FullName} is geregistreerd.");
@@ -136,18 +136,18 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.WriteLine("Afspraak aanmaken");
 
                 Console.Write("\t Zoek naam van patient: ");
-                Patient? chosenPatient = await GetChosenPatient(Console.ReadLine()) ?? throw new ArgumentException("Foutieve patient id. Probeer opnieuw.");
+                Patient? chosenPatient = await GetChosenPatient(Console.ReadLine()) ?? throw new ArgumentException("ongeldige patient id. Probeer opnieuw.");
 
                 Console.WriteLine();
                 Console.WriteLine();
 
                 Console.Write("\t Zoek naam van arts: ");
-                Physician? chosenPhysician = await GetChosenPhysician(Console.ReadLine()!) ?? throw new ArgumentException("Foutieve arts id. Probeer opnieuw.");
+                Physician? chosenPhysician = await GetChosenPhysician(Console.ReadLine()!) ?? throw new ArgumentException("ongeldige arts id. Probeer opnieuw.");
 
                 Console.WriteLine();
 
                 Appointment result = await appointmentService.AddAppointment(chosenPatient, chosenPhysician, CreateAppointment());
-                ConsoleOutputService.ShowSuccess($"Afspraak is gemaakt voor patient {result} met {result.Physician}");
+                ConsoleOutputService.ShowSuccess(result.ToString());
             }
             catch (Exception e)
             {
@@ -155,6 +155,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             }
         }
 
+        #region HelperMethods
         private static Patient CreatePatient()
         {
             Console.Write("\t Voornaam: ");
@@ -163,19 +164,19 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             Console.Write(" \t Achternaam: ");
             string lastName = Console.ReadLine();
 
-            Console.Write(" \t Adres (optioneel): ");
-            string address = Console.ReadLine();
-
             Console.Write(" \t Geboortedatum (vb. 10-02-2003): ");
             string birthdate = Console.ReadLine();
 
-            Console.Write(" \t Telefoonnummer (vb. +32456789123): ");
+            Console.Write(" \t Adres: ");
+            string address = Console.ReadLine();
+
+            Console.Write(" \t Gsm nummer (vb. +32456789123): ");
             string number = Console.ReadLine();
 
             return new Patient(firstName!, lastName!, address!, birthdate!, number!);
         }
 
-        public static CreateAppointment CreateAppointment()
+        private static CreateAppointment CreateAppointment()
         {
             Console.Write(" \t Voer de datum en tijdstip in (vb. 10-02-2003 12:30): ");
             string date = Console.ReadLine();
@@ -202,9 +203,8 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             return new Physician(firstName!, lastName!, birthdate!);
         }
 
-        public async static Task<Patient> GetChosenPatient(string? patientName)
+        private async static Task<Patient> GetChosenPatient(string? patientName)
         {
-
             IEnumerable<Patient?> patients = await patientService.GetPerson(patientName!);
 
             foreach (var patient in patients)
@@ -215,13 +215,13 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             Console.WriteLine();
 
             Console.Write("\t Voer de id van de patient in: ");
-            var isUserInputCorrect = int.TryParse(Console.ReadLine(), out int patientId);
+            bool isUserInputCorrect = int.TryParse(Console.ReadLine(), out int patientId);
 
 
-            return patients.FirstOrDefault(p => p!.Id == patientId) ?? throw new ArgumentException("foutieve id invoer.");
+            return patients.FirstOrDefault(p => p!.Id == patientId) ?? throw new ArgumentException("ongeldige id invoer.");
         }
 
-        public async static Task<Physician> GetChosenPhysician(string physicianName)
+        private async static Task<Physician> GetChosenPhysician(string physicianName)
         {
 
             IEnumerable<Physician?> physicians = await physicianService.GetPerson(physicianName);
@@ -237,14 +237,14 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
             Console.Write("\t Voer de id van de arts in: ");
 
-            var isUserInputCorrect = int.TryParse(Console.ReadLine(), out int physicianId);
+            bool isUserInputCorrect = int.TryParse(Console.ReadLine(), out int physicianId);
 
-            return physicians.FirstOrDefault(p => p!.Id == physicianId) ?? throw new ArgumentException("foutieve id invoer.");
+            return physicians.FirstOrDefault(p => p!.Id == physicianId) ?? throw new ArgumentException("ongeldige id invoer.");
         }
 
-        public async static Task OptionalAppointmentsFiltering(IEnumerable<Appointment> appointments)
+        private async static Task OptionalAppointmentsFiltering(IEnumerable<Appointment> appointments)
         {
-            Console.WriteLine("Voer cijfer 1 in om te filteren op naam van arts of 2 op naam van patient.");
+            Console.WriteLine("Voer cijfer 1 in om te filteren op naam van de arts of 2 op de naam van patient.");
             Console.Write("Druk op een willekeurige toets om verder te gaan: ");
 
             bool isUserInputCorrect;
@@ -272,7 +272,8 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
         {
             Console.Write("\t Zoek naam van arts: ");
             string physicianName = Console.ReadLine();
-            var chosenPhysician = await GetChosenPhysician(physicianName!);
+
+            Physician chosenPhysician = await GetChosenPhysician(physicianName!);
 
             Console.Clear();
 
@@ -294,7 +295,8 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
         {
             Console.Write("\t Zoek naam van patient: ");
             string patientName = Console.ReadLine();
-            var chosenPatient = await GetChosenPatient(patientName);
+
+            Patient chosenPatient = await GetChosenPatient(patientName);
 
             Console.Clear();
 
@@ -312,7 +314,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             else Console.WriteLine("Er zijn geen afspraken.");
         }
 
-        public static void RestartScreen()
+        private static void RestartScreen()
         {
             Console.WriteLine();
             Console.WriteLine();
@@ -322,6 +324,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             while (choice != ConsoleKey.Enter)
                 choice = Console.ReadKey().Key;
         }
+        #endregion
 
         #region FreeCodeForAssignment
         static async Task Main(string[] args)

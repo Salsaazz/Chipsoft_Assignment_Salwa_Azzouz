@@ -6,24 +6,36 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
     public class Patient : Person
     {
         [Required]
-        private string phoneNumber;
+        private string mobileNumber;
         [Required]
-        public string Address { get; set; }
-        public string PhoneNumber
+        private string address;
+        public string MobileNumber
         {
-            get => phoneNumber;
+            get => mobileNumber;
             set
             {
 
                 if (value.IsPhoneNumberValid())
-                    phoneNumber = value;
+                    mobileNumber = value;
                 else
-                    throw new ArgumentException("Foutieve telefoonummer invoer. Gebruik het formaat +landcode nummer.");
+                    throw new ArgumentException("ongeldige gsm nummer invoer. Gebruik het formaat +landcode nummer.");
 
             }
         }
         public string? Email { get; set; }
-        public int? BtwNumber { get; set; }
+        public int? PersonalIdentityNumber { get; set; }
+
+        public string Address
+        {
+            get => address;
+            set
+            {
+                if (value.IsAddressValid())
+                    address = value;
+
+                else throw new ArgumentException("ongeldige adres invoer.");
+            }
+        }
 
         protected Patient()
         {
@@ -33,7 +45,7 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
         public Patient(string firstName, string lastName, string address, string birthdate, string number) : base(firstName, lastName, birthdate)
         {
             Address = address;
-            PhoneNumber = number;
+            MobileNumber = number;
         }
     }
 }

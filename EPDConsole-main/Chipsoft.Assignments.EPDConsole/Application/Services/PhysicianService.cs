@@ -17,10 +17,10 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
         {
             FormatPerson(person);
 
-            var findPhysician = await GetPerson(person.FullName, person.Birthdate);
+            IEnumerable<Physician?> findPhysician = await GetPerson(person.FullName, person.Birthdate);
 
-            if (!findPhysician.Any())
-                throw new InvalidOperationException("Deze arts is al geregistreerd.");
+            if (findPhysician.Any())
+                throw new InvalidOperationException("deze arts is al geregistreerd.");
 
             return await physicianRepository.CreatePerson(person);
         }
@@ -34,7 +34,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Fout bij het verwijderen van de arts.", ex);
+                throw new InvalidOperationException("fout bij het verwijderen van de arts.", ex);
             }
         }
 

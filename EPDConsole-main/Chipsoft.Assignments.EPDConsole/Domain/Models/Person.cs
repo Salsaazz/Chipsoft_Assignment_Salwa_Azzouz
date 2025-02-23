@@ -35,7 +35,7 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
                 if (value.IsNameValid())
                     firstName = value;
                 else
-                    throw new ArgumentException("Foutieve voornaam invoer.");
+                    throw new ArgumentException("ongeldige voornaam invoer.");
             }
         }
 
@@ -47,7 +47,7 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
                 if (value.IsNameValid())
                     lastName = value;
                 else
-                    throw new ArgumentException("Foutieve achternaam invoer.");
+                    throw new ArgumentException("ongeldige achternaam invoer.");
             }
         }
 
@@ -62,11 +62,11 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
                     DateTimeStyles.None, out birthdate);
 
                 if (!IsDateInputCorrect)
-                    throw new ArgumentException("Foutieve geboortedatum invoer. Gebruik het formaat dag-maand-jaar.");
+                    throw new ArgumentException("ongeldige geboortedatum invoer. Gebruik het formaat dag-maand-jaar.");
 
                 if (birthdate > DateTime.Now)
 
-                    throw new ArgumentException("Geboortedatum kan niet in de toekomst liggen.", nameof(value));
+                    throw new ArgumentException("geboortedatum kan niet in de toekomst liggen.");
             }
         }
 

@@ -18,7 +18,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
 
         public async Task<Appointment> AddAppointment(Patient patient, Physician physician, CreateAppointment appointmentDTO)
         {
-            var appointment = AppointmentDTOtoModel(appointmentDTO, physician, patient);
+            Appointment appointment = AppointmentDTOtoModel(appointmentDTO, physician, patient);
             return await appointmentRepository.CreateAppointment(appointment);
         }
 
@@ -26,7 +26,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
         {
             IEnumerable<Appointment?> appointments = await appointmentRepository.GetAllAppointments();
             if (!appointments.Any())
-                throw new InvalidOperationException("Er zijn geen afspraken.");
+                throw new InvalidOperationException("er zijn geen afspraken.");
 
             return appointments;
         }

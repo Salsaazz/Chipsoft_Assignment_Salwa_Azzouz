@@ -18,9 +18,9 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
         {
             FormatPerson(person);
 
-            var findPerson = await GetPerson(person.FullName, person.Birthdate);
+            IEnumerable<Patient?> findPerson = await GetPerson(person.FullName, person.Birthdate);
 
-            if (!findPerson.Any())
+            if (findPerson.Any())
                 throw new InvalidOperationException("Deze patient is al geregistreerd.");
 
             return await patientRepository.CreatePerson(person);

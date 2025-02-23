@@ -48,17 +48,17 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
                     DateTimeStyles.None, out date);
 
                 if (!isDateInputCorrect)
-                    throw new ArgumentException("Foutieve datum invoer. Gebruik het formaat dag-maand-jaar uur:minuut.");
+                    throw new ArgumentException("ongeldige datum invoer. Gebruik het formaat dag-maand-jaar uur:minuut.");
 
                 if (date <= DateTime.Now)
 
-                    throw new ArgumentException("Datum kan niet in het verleden liggen.", nameof(value));
+                    throw new ArgumentException("datum kan niet in het verleden liggen.");
             }
         }
 
         public override string ToString()
         {
-            return $"afspraak: {Physician} met patient {Patient} - {date:dd-MM-yyyy} om {date:HH:mm}";
+            return $"afspraak {Physician} met patient {Patient} - {date:dd-MM-yyyy} om {date:HH:mm}";
         }
     }
 }
