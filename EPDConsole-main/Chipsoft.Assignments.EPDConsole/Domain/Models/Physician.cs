@@ -2,7 +2,7 @@
 {
     public class Physician : Person
     {
-        public Physician()
+        protected Physician()
         {
 
         }

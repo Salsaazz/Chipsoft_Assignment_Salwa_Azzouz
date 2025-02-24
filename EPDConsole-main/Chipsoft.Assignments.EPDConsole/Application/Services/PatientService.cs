@@ -33,9 +33,9 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
                 await patientRepository.DeletePerson(person!);
                 return person;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new InvalidOperationException("fout bij het verwijderen van de patient.", ex);
+                throw new InvalidOperationException("fout bij het verwijderen van de patient.");
             }
         }
 
@@ -44,11 +44,10 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("de naam kan niet leeg zijn.");
 
-            name.CapitalizeFirstLetterOfWords();
             IEnumerable<Patient?> result = await patientRepository.GetPerson(name!.ToLower());
 
             if (!result.Any())
-                throw new InvalidOperationException($"patient {name} is nog niet geregistreerd in het systeem. Registreer eerst de patient.");
+                throw new InvalidOperationException($"patient {name} is niet geregistreerd in het systeem.");
 
             return result;
         }

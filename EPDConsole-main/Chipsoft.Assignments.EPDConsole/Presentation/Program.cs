@@ -32,7 +32,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
                 Patient patient = CreatePatient();
                 await patientService.AddPerson(patient);
-                ConsoleOutputService.ShowSuccess($"Patient {patient.FullName} is geregistreerd.");
+                ConsoleOutputService.ShowSuccess($"patient {patient.FullName} is geregistreerd.");
             }
             catch (Exception e)
             {
@@ -147,7 +147,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.WriteLine();
 
                 Appointment result = await appointmentService.AddAppointment(chosenPatient, chosenPhysician, CreateAppointment());
-                ConsoleOutputService.ShowSuccess(result.ToString());
+                ConsoleOutputService.ShowSuccess($"{result.ToString()} is gemaakt.");
             }
             catch (Exception e)
             {

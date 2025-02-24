@@ -20,6 +20,7 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
         public List<Appointment> Appointments { get; set; } = new List<Appointment>();
 
         protected Person() { }
+
         public Person(string firstName, string lastName, string birthdate)
         {
             FirstName = firstName;
@@ -63,6 +64,9 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Models
 
                 if (!IsDateInputCorrect)
                     throw new ArgumentException("ongeldige geboortedatum invoer. Gebruik het formaat dag-maand-jaar.");
+
+                if (birthdate > DateTime.Now)
+                    throw new ArgumentException("ongeldige geboortedatum invoer. Geboortedatum kan niet in de toekomst liggen.");
             }
         }
 

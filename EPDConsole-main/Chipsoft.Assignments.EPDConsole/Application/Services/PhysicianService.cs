@@ -46,7 +46,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
             IEnumerable<Physician?> result = await physicianRepository.GetPerson(name.ToLower());
 
             if (!result.Any())
-                throw new NullReferenceException($"Dr. {name} is nog niet geregistreerd in het systeem. Registreer eerst de arts.");
+                throw new NullReferenceException($"Dr. {name} is niet geregistreerd in het systeem.");
 
             return result;
         }
