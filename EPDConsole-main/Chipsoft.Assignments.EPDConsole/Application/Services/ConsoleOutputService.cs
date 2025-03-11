@@ -15,7 +15,7 @@
         {
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write($"FAILED");
+            Console.Write($"FOUTIEF");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($": {message}");
         }
