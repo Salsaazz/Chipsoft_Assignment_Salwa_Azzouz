@@ -7,7 +7,7 @@ using Chipsoft.Assignments.EPDConsole.Infrastructure.Repositories;
 
 namespace Chipsoft.Assignments.EPDConsole.Application.Services
 {
-    internal class AppointmentService : IAppointmentService
+    public class AppointmentService : IAppointmentService
     {
         private readonly IAppointmentRepository appointmentRepository;
 

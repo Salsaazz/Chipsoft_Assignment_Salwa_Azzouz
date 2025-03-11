@@ -1,5 +1,4 @@
 ﻿using Chipsoft.Assignments.EPDConsole.Application.Interfaces;
-using Chipsoft.Assignments.EPDConsole.Domain.Extensions;
 using Chipsoft.Assignments.EPDConsole.Domain.Models;
 using Chipsoft.Assignments.EPDConsole.Infrastructure.Interface;
 
@@ -42,7 +41,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
         public async Task<IEnumerable<Patient?>> GetPerson(string name)
         {
             if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("de naam kan niet leeg zijn.");
+                throw new ArgumentException("naamveld kan niet leeg zijn.");
 
             IEnumerable<Patient?> result = await patientRepository.GetPerson(name!.ToLower());
 

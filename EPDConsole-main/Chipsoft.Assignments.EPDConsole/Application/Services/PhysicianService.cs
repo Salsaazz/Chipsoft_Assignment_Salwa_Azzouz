@@ -41,7 +41,7 @@ namespace Chipsoft.Assignments.EPDConsole.Application.Services
         public async Task<IEnumerable<Physician?>> GetPerson(string name)
         {
             if (string.IsNullOrEmpty(name))
-                throw new NullReferenceException("De naam kan niet leeg zijn.");
+                throw new NullReferenceException("naamveld kan niet leeg zijn.");
 
             IEnumerable<Physician?> result = await physicianRepository.GetPerson(name.ToLower());
 

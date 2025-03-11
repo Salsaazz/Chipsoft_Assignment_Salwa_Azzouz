@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Chipsoft.Assignments.EPDConsole.Domain.Extensions
 {
@@ -11,5 +12,17 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Extensions
         public static bool IsAddressValid(this string address) => Regex.Match(address, @"^(?=.*[a-zA-Z])(?=.*[0-9]).+$").Success;
 
         public static string CapitalizeFirstLetterOfWords(this string text) => Regex.Replace(text, @"\b([a-z])", m => m.Value.ToUpper());
+
+        public static bool IsDateValid(this string input)
+        {
+            var format = "dd-MM-yyyy";
+            bool IsDateInputCorrect = DateTime.TryParseExact(input, format,
+                CultureInfo.InvariantCulture,
+                DateTimeStyles.None, out _);
+
+            if (!IsDateInputCorrect) return false;
+
+            return true;
+        }
     }
 }
