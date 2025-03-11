@@ -423,6 +423,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             var input = Console.ReadLine();
             return input?.ToUpper().Trim() == "X" ? null : input;
         }
+
         private static string? GetInputWithValidation(string prompt, string errorMessage, InputType inputType)
         {
             while (true)
@@ -488,6 +489,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
         {
             return input.Any(char.IsLetter);
         }
+
         private enum InputType
         {
             Any,
@@ -497,6 +499,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             Date,
             PhoneNumber
         }
+
         private static void RestartScreen()
         {
             Console.WriteLine();
