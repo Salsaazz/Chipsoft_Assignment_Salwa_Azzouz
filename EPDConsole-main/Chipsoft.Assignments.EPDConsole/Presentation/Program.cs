@@ -219,81 +219,6 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
             return new Patient(firstName!, lastName!, address!, birthdate!, number!);
         }
-        private static string? GetInputWithValidation(string prompt, string errorMessage, InputType inputType)
-        {
-            while (true)
-            {
-                var input = GetInput(prompt);
-                if (input is null) return null;
-
-                if (input.Trim() == "")
-                {
-                    Console.WriteLine("Dit veld kan niet leeg zijn.");
-                    continue;
-                }
-
-                switch (inputType)
-                {
-                    case InputType.TextOnly:
-                        if (HasNumbers(input))
-                        {
-                            ConsoleOutputService.ShowError(errorMessage);
-                            continue;
-                        }
-                        break;
-                    case InputType.NumbersOnly:
-                        if (!HasNumbers(input) || HasLetters(input))
-                        {
-                            ConsoleOutputService.ShowError(errorMessage);
-                            continue;
-                        }
-                        break;
-                    case InputType.BothRequired:
-                        if (!HasNumbers(input) || !HasLetters(input))
-                        {
-                            ConsoleOutputService.ShowError(errorMessage);
-                            continue;
-                        }
-                        break;
-                    case InputType.Date:
-                        if (!input.IsDateValid())
-                        {
-                            ConsoleOutputService.ShowError(errorMessage);
-                            continue;
-                        }
-                        break;
-                    case InputType.PhoneNumber:
-                        if (!input.IsPhoneNumberValid())
-                        {
-                            ConsoleOutputService.ShowError(errorMessage);
-                            continue;
-                        }
-                        break;
-
-                }
-                return input;
-            }
-        }
-
-        private static bool HasNumbers(string input)
-        {
-            return input.Any(char.IsDigit);
-        }
-
-        private static bool HasLetters(string input)
-        {
-            return input.Any(char.IsLetter);
-        }
-
-        private enum InputType
-        {
-            Any,
-            TextOnly,
-            NumbersOnly,
-            BothRequired,
-            Date,
-            PhoneNumber
-        }
 
         private static CreateAppointment? CreateAppointment()
         {
@@ -498,7 +423,80 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             var input = Console.ReadLine();
             return input?.ToUpper().Trim() == "X" ? null : input;
         }
+        private static string? GetInputWithValidation(string prompt, string errorMessage, InputType inputType)
+        {
+            while (true)
+            {
+                var input = GetInput(prompt);
+                if (input is null) return null;
 
+                if (input.Trim() == "")
+                {
+                    Console.WriteLine("Dit veld kan niet leeg zijn.");
+                    continue;
+                }
+
+                switch (inputType)
+                {
+                    case InputType.TextOnly:
+                        if (HasNumbers(input))
+                        {
+                            ConsoleOutputService.ShowError(errorMessage);
+                            continue;
+                        }
+                        break;
+                    case InputType.NumbersOnly:
+                        if (!HasNumbers(input) || HasLetters(input))
+                        {
+                            ConsoleOutputService.ShowError(errorMessage);
+                            continue;
+                        }
+                        break;
+                    case InputType.BothRequired:
+                        if (!HasNumbers(input) || !HasLetters(input))
+                        {
+                            ConsoleOutputService.ShowError(errorMessage);
+                            continue;
+                        }
+                        break;
+                    case InputType.Date:
+                        if (!input.IsDateValid())
+                        {
+                            ConsoleOutputService.ShowError(errorMessage);
+                            continue;
+                        }
+                        break;
+                    case InputType.PhoneNumber:
+                        if (!input.IsPhoneNumberValid())
+                        {
+                            ConsoleOutputService.ShowError(errorMessage);
+                            continue;
+                        }
+                        break;
+
+                }
+                return input;
+            }
+        }
+
+        private static bool HasNumbers(string input)
+        {
+            return input.Any(char.IsDigit);
+        }
+
+        private static bool HasLetters(string input)
+        {
+            return input.Any(char.IsLetter);
+        }
+        private enum InputType
+        {
+            Any,
+            TextOnly,
+            NumbersOnly,
+            BothRequired,
+            Date,
+            PhoneNumber
+        }
         private static void RestartScreen()
         {
             Console.WriteLine();
