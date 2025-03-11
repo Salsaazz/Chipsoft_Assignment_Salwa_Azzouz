@@ -7,7 +7,7 @@ namespace Chipsoft.Assignments.EPDConsole.Domain.Extensions
     {
         public static bool IsNameValid(this string name) => Regex.Match(name, "^[A-Z][a-zA-Z]*$", RegexOptions.IgnoreCase).Success;
 
-        public static bool IsPhoneNumberValid(this string number) => Regex.Match(number, "^\\+[1-9][0-9]{7,14}$").Success;
+        public static bool IsPhoneNumberValid(this string number) => Regex.Match(number, "^\\+?[1-9][0-9\\s]{7,14}$").Success;
 
         public static bool IsAddressValid(this string address) => Regex.Match(address, @"^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9\s]+$").Success;
 

@@ -29,6 +29,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             try
             {
                 Console.Clear();
+                Console.WriteLine("Patient registratie.");
                 Console.WriteLine("Voer de persoonsgegevens van de patient in.");
                 Console.WriteLine("(Voer 'X' in om het proces te annuleren)");
 
@@ -103,6 +104,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             try
             {
                 Console.Clear();
+                Console.WriteLine("Arts registratie.");
                 Console.WriteLine("Voer de persoonsgegevens van de arts in:");
                 Console.WriteLine("(Voer 'X' in om het proces te annuleren)");
 
@@ -208,13 +210,13 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             var lastName = GetInputWithValidation("Achternaam: ", "voer opnieuw de achternaam in.", InputType.TextOnly);
             if (lastName is null) return null;
 
-            var birthdate = GetInputWithValidation("Geboortedatum (vb. 10-02-2003): ", "voer opnieuw de geboortedatum in.", InputType.Date);
+            var birthdate = GetInputWithValidation("Geboortedatum (vb. 10-02-2003): ", "voer opnieuw de geboortedatum in.", InputType.DateOnly);
             if (birthdate is null) return null;
 
             var address = GetInputWithValidation("Adres (vb. Langestraat 17): ", "voer opnieuw het adres in.", InputType.Address);
             if (address is null) return null;
 
-            var number = GetInputWithValidation("Gsm nummer (vb. +32456789123): ", "voer opnieuw het GSM nummer in.", InputType.PhoneNumber);
+            var number = GetInputWithValidation("Gsm nummer (vb. +32 456789123): ", "voer opnieuw het GSM nummer in (+landcode nummer).", InputType.PhoneNumber);
             if (number is null) return null;
 
             return new Patient(firstName!, lastName!, address!, birthdate!, number!);
@@ -242,7 +244,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             var lastName = GetInputWithValidation("Achternaam: ", "voer opnieuw de achternaam in.", InputType.TextOnly);
             if (lastName is null) return null;
 
-            var birthdate = GetInputWithValidation("Geboortedatum (vb. 10-02-2003): ", "voer opnieuw de geboortedatum in.", InputType.Date);
+            var birthdate = GetInputWithValidation("Geboortedatum (vb. 10-02-2003): ", "voer opnieuw de geboortedatum in.", InputType.DateOnly);
             if (birthdate is null) return null;
 
             return new Physician(firstName!, lastName!, birthdate!);
@@ -269,7 +271,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             {
                 string? userInput = GetInput("Voer de ID in: ");
 
-                if (userInput?.ToUpper().Trim() == "X") return null;
+                if (userInput == null) return null;
 
                 if (int.TryParse(userInput, out int patientId))
                 {
@@ -339,9 +341,6 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 var userInput = GetInput("(Voer 'X' in om het proces te annuleren): ");
 
                 if (userInput == null) return;
-
-                isUserInputCorrect = userInput != null && options.Contains(userInput);
-
 
                 isUserInputCorrect = userInput != null && options.Contains(userInput);
 
@@ -418,11 +417,11 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             else Console.WriteLine("Er zijn geen afspraken.");
         }
 
-        private static string? GetInput(string prompt, InputType? inputType = InputType.Any)
+        private static string? GetInput(string prompt)
         {
             Console.Write($"\t {prompt}");
-            var input = Console.ReadLine();
-            return input?.ToUpper().Trim() == "X" ? null : input.Trim();
+            var input = Console.ReadLine()?.Trim();
+            return input?.ToUpper() == "X" ? null : input;
         }
 
         private static string? GetInputWithValidation(string prompt, string errorMessage, InputType inputType)
@@ -432,7 +431,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 var input = GetInput(prompt);
                 if (input is null) return null;
 
-                if (input.Trim() == "")
+                if (input == "")
                 {
                     ConsoleOutputService.ShowError("Dit veld kan niet leeg zijn. Probeer opnieuw.");
                     continue;
@@ -461,7 +460,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                             continue;
                         }
                         break;
-                    case InputType.Date:
+                    case InputType.DateOnly:
                         if (!input.IsDateValid())
                         {
                             ConsoleOutputService.ShowError(errorMessage);
@@ -476,7 +475,8 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                         }
                         break;
                     case InputType.PhoneNumber:
-                        if (!input.IsPhoneNumberValid())
+                        var nr = input.IsPhoneNumberValid();
+                        if (!nr)
                         {
                             ConsoleOutputService.ShowError(errorMessage);
                             continue;
@@ -511,7 +511,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             TextOnly,
             NumbersOnly,
             BothRequired,
-            Date,
+            DateOnly,
             DateTime,
             PhoneNumber,
             Address
