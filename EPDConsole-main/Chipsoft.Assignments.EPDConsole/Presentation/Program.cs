@@ -35,8 +35,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
                 Patient? patient = CreatePatient();
 
-                if (patient is null)
-                    return;
+                if (patient is null) return;
 
                 await patientService.AddPerson(patient);
                 ConsoleOutputService.ShowSuccess($"patient {patient.FullName} is geregistreerd.");
@@ -140,8 +139,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
                 Physician? physician = CreatePhysician();
 
-                if (physician is null)
-                    return;
+                if (physician is null) return;
 
                 Physician result = await physicianService.AddPerson(physician);
 
@@ -195,8 +193,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
                         chosenPatient = await GetChosenPatient(Console.ReadLine());
 
-                        if (chosenPatient is null)
-                            return;
+                        if (chosenPatient is null) return;
                     }
                     catch (Exception e)
                     {
@@ -219,8 +216,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
                         chosenPhysician = await GetChosenPhysician(Console.ReadLine()!);
 
-                        if (chosenPhysician is null)
-                            return;
+                        if (chosenPhysician is null) return;
                     }
                     catch (Exception e)
                     {
@@ -570,7 +566,6 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                             continue;
                         }
                         break;
-
                 }
                 return input;
             }
