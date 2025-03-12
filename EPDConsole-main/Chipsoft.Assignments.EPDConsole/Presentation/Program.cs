@@ -429,11 +429,14 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             do
             {
                 var physicianName = GetInput("Voer de naam van de arts in: ");
+
                 if (physicianName is null) return;
 
                 try
                 {
                     chosenPhysician = await GetChosenPhysician(physicianName!);
+
+                    if (chosenPhysician is null) return;
                 }
                 catch (Exception e)
                 {
@@ -465,11 +468,14 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             do
             {
                 var patientName = GetInput("Voer de naam van de patient in: ");
+
                 if (patientName is null) return;
 
                 try
                 {
                     chosenPatient = await GetChosenPatient(patientName!);
+
+                    if (chosenPatient is null) return;
                 }
                 catch (Exception e)
                 {
