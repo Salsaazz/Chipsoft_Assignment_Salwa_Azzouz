@@ -55,13 +55,27 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.WriteLine("Patient verwijderen");
                 Console.WriteLine("(Voer 'X' in om het proces te annuleren)");
 
-                Console.Write("\t Voer de naam van de patient in: ");
-                string name = Console.ReadLine()!;
+                Patient? patient = null;
 
-                Patient? patient = await GetChosenPatient(name);
+                do
+                {
+                    var name = GetInput("Voer de naam van de patient in: ");
 
-                if (patient is null)
-                    return;
+                    try
+                    {
+                        if (name is null) return;
+
+                        patient = await GetChosenPatient(name!);
+
+                        if (patient is null) return;
+                    }
+                    catch (Exception e)
+                    {
+
+                        ConsoleOutputService.ShowError($"{e.Message} Probeer opnieuw.");
+                    }
+                } while (patient is null);
+
 
                 Patient deletedPatient = await patientService.DeletePerson(patient!);
 
@@ -81,15 +95,31 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.WriteLine("Arts verwijderen");
                 Console.WriteLine("(Voer 'X' in om het proces te annuleren)");
 
-                Console.Write("\t Voer de naam van de arts in: ");
-                string name = Console.ReadLine()!;
+                Physician? physician = null;
 
-                Physician? physician = await GetChosenPhysician(name!);
+                do
+                {
+                    var name = GetInput("Voer de naam van de arts in: ");
 
-                if (physician is null)
+                    try
+                    {
+                        if (name is null) return;
+
+                        physician = await GetChosenPhysician(name!);
+
+                        if (physician is null) return;
+                    }
+                    catch (Exception e)
+                    {
+
+                        ConsoleOutputService.ShowError($"{e.Message} Probeer opnieuw.");
+                    }
+                } while (physician is null);
+
+                Physician? deletedPhysician = await physicianService.DeletePerson(physician!);
+
+                if (deletedPhysician is null)
                     return;
-
-                Physician deletedPhysician = await physicianService.DeletePerson(physician!);
 
                 ConsoleOutputService.ShowSuccess($"{deletedPhysician!} met ID {deletedPhysician.Id} is verwijderd.");
             }
@@ -155,20 +185,50 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 Console.WriteLine("Afspraak aanmaken");
                 Console.WriteLine("(Voer 'X' in om het proces te annuleren): ");
 
-                Console.Write("\t Voer de naam van de patient in: ");
-                Patient? chosenPatient = await GetChosenPatient(Console.ReadLine());
+                Patient? chosenPatient = null;
 
-                if (chosenPatient is null)
-                    return;
+                do
+                {
+                    try
+                    {
+                        Console.Write("\t Voer de naam van de patient in: ");
+
+                        chosenPatient = await GetChosenPatient(Console.ReadLine());
+
+                        if (chosenPatient is null)
+                            return;
+                    }
+                    catch (Exception e)
+                    {
+
+                        ConsoleOutputService.ShowError($"{e.Message} Probeer opnieuw.");
+                    }
+
+                } while (chosenPatient is null);
 
                 Console.WriteLine();
                 Console.WriteLine();
 
-                Console.Write("\t Voer de naam van de arts in: ");
-                Physician? chosenPhysician = await GetChosenPhysician(Console.ReadLine()!);
+                Physician? chosenPhysician = null;
 
-                if (chosenPhysician is null)
-                    return;
+                do
+                {
+                    try
+                    {
+                        Console.Write("\t Voer de naam van de arts in: ");
+
+                        chosenPhysician = await GetChosenPhysician(Console.ReadLine()!);
+
+                        if (chosenPhysician is null)
+                            return;
+                    }
+                    catch (Exception e)
+                    {
+
+                        ConsoleOutputService.ShowError($"{e.Message} Probeer opnieuw.");
+                    }
+
+                } while (chosenPhysician is null);
 
                 Console.WriteLine();
                 CreateAppointment? createAppointment = CreateAppointment();
@@ -277,11 +337,11 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 {
                     result = patients.FirstOrDefault(p => p!.Id == patientId);
                     if (result is null)
-                        Console.Write("\t Ongeldige ID. Probeer opnieuw: ");
+                        ConsoleOutputService.ShowError("ID niet gevonden. Probeer opnieuw.");
                 }
                 else
                 {
-                    Console.Write("\t Ongeldige ID. Voer een correcte ID in: ");
+                    ConsoleOutputService.ShowError("Ongeldige ID. Probeer opnieuw.");
                 }
             }
 
@@ -316,11 +376,11 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
                 {
                     result = physicians.FirstOrDefault(p => p!.Id == physicianId);
                     if (result is null)
-                        Console.Write("\t Ongeldige ID. Probeer opnieuw: ");
+                        ConsoleOutputService.ShowError("ID niet gevonden. Probeer opnieuw.");
                 }
                 else
                 {
-                    Console.Write("\t Ongeldige invoer. Voer een cijfer ID in: ");
+                    ConsoleOutputService.ShowError("Ongeldige ID. Probeer opnieuw.");
                 }
             }
 
@@ -368,13 +428,23 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
         private static async Task HandlePhysiciantFilter(IEnumerable<Appointment> appointments)
         {
-            Console.Write("\t Voer de naam van de arts in: ");
-            string physicianName = Console.ReadLine();
+            Physician? chosenPhysician = null;
 
-            Physician? chosenPhysician = await GetChosenPhysician(physicianName!);
+            do
+            {
+                var physicianName = GetInput("Voer de naam van de arts in: ");
+                if (physicianName is null) return;
 
-            if (chosenPhysician is null)
-                return;
+                try
+                {
+                    chosenPhysician = await GetChosenPhysician(physicianName!);
+                }
+                catch (Exception e)
+                {
+                    ConsoleOutputService.ShowError($"{e.Message} Probeer opnieuw.");
+                    continue;
+                }
+            } while (chosenPhysician is null);
 
             Console.Clear();
 
@@ -394,12 +464,23 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
 
         private static async Task HandlePatientFilter(IEnumerable<Appointment> appointments)
         {
-            Console.Write("\t Voer de naam van de patient in: ");
-            string patientName = Console.ReadLine();
+            Patient? chosenPatient = null;
 
-            Patient? chosenPatient = await GetChosenPatient(patientName);
+            do
+            {
+                var patientName = GetInput("Voer de naam van de patient in: ");
+                if (patientName is null) return;
 
-            if (chosenPatient is null) return;
+                try
+                {
+                    chosenPatient = await GetChosenPatient(patientName!);
+                }
+                catch (Exception e)
+                {
+                    ConsoleOutputService.ShowError($"{e.Message} Probeer opnieuw.");
+                    continue;
+                }
+            } while (chosenPatient is null);
 
             Console.Clear();
 
@@ -411,7 +492,7 @@ namespace Chipsoft.Assignments.EPDConsole.Presentation
             {
                 foreach (var appointment in appointments)
                 {
-                    Console.WriteLine($"\t {appointment!.Id}. {appointment}");
+                    Console.WriteLine($"\t Afspraak ID {appointment!.Id}: Dr. {appointment.Physician.FullName}, Patient: {appointment.Patient.FullName}, Datum: {appointment.Date}");
                 }
             }
             else Console.WriteLine("Er zijn geen afspraken.");
